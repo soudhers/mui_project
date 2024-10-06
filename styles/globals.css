@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    font-family: var(--font-roboto);
+  }
+  
+  .app {
+    display: flex;
+  }
+  
+  .content {
+    margin-top: 64px; /* Adjust this value if your NavBar height is different */
+    flex-grow: 1;
+    padding: 16px; /* Optional: Add padding to the content */
+  }
