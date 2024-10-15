@@ -1,15 +1,39 @@
 'use client';
-import { Theme, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import { MixinsOptions } from '@mui/material/styles/createMixins';
 
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface (remove this line if you don't have the rule enabled)
-  interface DefaultTheme extends Theme {}
+declare module '@mui/material/styles' {
+  interface Theme {
+    mixins: {
+      toolbar: {
+        minHeight: number;
+      };
+    };
+  }
+  interface ThemeOptions extends MixinsOptions {
+    toolbar?: {
+      minHeight?: number;
+    };
+  }
 }
 
 const theme = createTheme({
-  cssVariables: true,
+  palette: {
+    primary: {
+      main: '#1976d2', // Define your primary color here
+    },
+    secondary: {
+      main: '#dc004e', // Define your secondary color here
+    },
+  },
   typography: {
     fontFamily: 'var(--font-roboto)',
+    fontWeightBold: 700, // Ensure fontWeightBold is defined
+  },
+  mixins: {
+    toolbar: {
+      minHeight: 56, // Define your toolbar minHeight here
+    },
   },
 });
 

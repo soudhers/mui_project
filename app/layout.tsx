@@ -1,12 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
 import "@styles/globals.css";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Roboto } from 'next/font/google';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
-
-import NavBar from "@components/Navbar";
-import SideMenu from "@components/Sidemenu";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import CSSBaseline from "@mui/material/CssBaseline";
+import AuthProvider from "./context/AuthProvider";
+import theme from "@app/theme";
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -28,17 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}>
-        <AppRouterCacheProvider>
+        <main className="app">
           <ThemeProvider theme={theme}>
-            <NavBar />
-            <main className="app">
-              <SideMenu />
-              <div className="content">
-                {children}
-              </div>
-            </main>
+            <CSSBaseline />
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </ThemeProvider>
-        </AppRouterCacheProvider>
+        </main>
       </body>
     </html>
   );

@@ -1,35 +1,60 @@
-import Image from "next/image";
-import Navbar from "@components/Navbar";
-import styles from "./page.module.css";
+// 'use client';
 
-export default function Home() {
+// import { getProviders, signIn, ClientSafeProvider } from 'next-auth/react';
+// import { useEffect, useState } from 'react';
+
+// interface Providers {
+//   [key: string]: ClientSafeProvider;
+// }
+
+// const SignIn: React.FC = () => {
+//   const [providers, setProviders] = useState<Providers | null>(null);
+
+//   useEffect(() => {
+//     const fetchProviders = async () => {
+//       const res = await getProviders();
+//       setProviders(res as Providers);
+//     };
+
+//     fetchProviders();
+//   }, []);
+
+//   const handleSignIn = (providerId: string) => {
+//     console.log('Inside handleSignIn with providerId:', providerId);
+//     signIn(providerId, { callbackUrl: 'http://localhost:3000/api/auth/callback/azure-ad' });
+//   };
+
+//   console.log('SignIn Comp: Providers:', providers);
+//   if (!providers) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div>
+//       {Object.values(providers).map((provider) => (
+//         <div key={provider.name}>
+//           <button onClick={() => handleSignIn(provider.id)}>
+//             Sign in with {provider.name}
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default SignIn;
+
+
+import options from './api/auth/[...nextauth]/options';
+import { getServerSession } from 'next-auth';
+import About from '@components/About';
+
+export default async function Home() {
+  const session = await getServerSession(options);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-          </div>
-      </main>
-      <footer className={styles.footer}>
-      Footer
-      </footer>
-    </div>
+    <>
+    {session ? <About /> : <div>Not authenticated</div>}
+    </>
   );
 }
